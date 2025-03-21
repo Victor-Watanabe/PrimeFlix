@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 
 function Home(){
     const [filmes, setfilmes] = useState([]);
-
+    const [loading, setloading] = useState(true);
+ 
     useEffect(()=>{
 
         async function loadingFilmes() {
@@ -17,12 +18,21 @@ function Home(){
             }
         })
 
-        setfilmes(response.data.results.slice(0,10))
-            
+        setfilmes(response.data.results.slice(0,10));
+        setloading(false);
+        
         }
         loadingFilmes();
    
     },[])
+
+    if(loading){
+        return(
+            <div className='loading'>
+             <h2>Carregando Filmes...</h2>
+            </div> 
+        );
+    }
 
     return(
         <div className='container'>
